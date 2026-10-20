@@ -14,3 +14,9 @@
 - Main production JS approximately 123KB gzip; Rive JS approximately 80KB gzip is lazy-loaded, plus its local ~2MB WASM only when the contact section approaches the viewport. Portrait WebP approximately 124KB.
 
 Remaining content dependencies: actual email and WhatsApp, actual NABD screenshots/status/technology/outcomes, owner's review of the processed portrait.
+
+## Final revision — 2026-10-20
+
+- Corrected the seat to a coherent cube projection: the front face has equal width and height (200×200px on wide layouts, 175×175px on compact layouts), with shared vertices for the top and side faces.
+- Verified 175×175px in the rendered production browser and visually reviewed the new seating composition.
+- Production homepage browser console reported no runtime errors in the final smoke check.
