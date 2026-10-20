@@ -20,3 +20,11 @@ Remaining content dependencies: actual email and WhatsApp, actual NABD screensho
 - Corrected the seat to a coherent cube projection: the front face has equal width and height (200×200px on wide layouts, 175×175px on compact layouts), with shared vertices for the top and side faces.
 - Verified 175×175px in the rendered production browser and visually reviewed the new seating composition.
 - Production homepage browser console reported no runtime errors in the final smoke check.
+
+## 2026-10-20 — Contact and NABD update
+- Production TypeScript/Vite build passed.
+- Browser checked Arabic and English case-study content; both original interface screenshots rendered with explicit demo-data disclosure.
+- Verified contact DOM targets: mailto:wahj200013@gmail.com and https://wa.me/218927592771. No messages sent.
+- No browser console errors observed on updated portfolio routes.
+- Responsive CSS added for single-column systems, connection flow, strengths and wrapping contact details; this revision was visually inspected at desktop width, not a physical phone.
+- NABD source inspected read-only; isolated screenshot preview used no production DB or integrations. Claims reflect source capabilities, not an end-to-end operational audit of NABD.

@@ -25,6 +25,8 @@ Final prompt:
 
 Manrope and Noto Sans Arabic, SIL Open Font License. License copies in `public/licenses/`. Self-hosted from Fontsource packages.
 
-## NABD visual
+## NABD interface screenshots
 
-Original HTML/CSS illustrative system overview created for this portfolio. It is clearly labeled as illustrative in both languages and is not a screenshot of the actual product. No customer data or fabricated performance results.
+`nabd-admin.webp` and `nabd-issuer.webp`: captured from the user's original Flask/Jinja dashboard and issuance templates, rendered in an isolated Flask preview with synthetic context. Original CSS, fonts, logo and issuance presentation JavaScript are retained. All names, counts and identifiers shown are demo data. No original database, credentials, upload directory or live integration was loaded. Integration scripts were excluded and network connections/form submissions blocked in the preview. Converted to WebP quality 90.
+
+Case-study claims were checked against administration `tp_puller.py` and the issuance `supabase_client.py`, `syncer.py`, document routes and templates. The page distinguishes policy/production transfer to administration from agent-status checks by issuance. It claims no measured business outcomes or release status.

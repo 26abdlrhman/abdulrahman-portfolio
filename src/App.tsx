@@ -504,74 +504,12 @@ function Process({ lang, still }: { lang: Lang; still: boolean }) {
     </section>
   );
 }
-function NabdVisual({ lang, large = false }: { lang: Lang; large?: boolean }) {
-  const ar = lang === "ar";
-  return (
-    <div className={`nabd-visual ${large ? "large" : ""}`}>
-      <div className="nabd-watermark">نبض</div>
-      <div className="nabd-orbit" />
-      <div className="nabd-diagram">
-        <div className="diagram-head">
-          <span className="nabd-logo">
-            نبض<i>●</i>
-          </span>
-          <span>NABD / SYSTEM OVERVIEW</span>
-          <span>↗</span>
-        </div>
-        <div className="diagram-content">
-          <div className="diagram-sidebar">
-            <b>▦</b>
-            <span>☰</span>
-            <span>▤</span>
-            <span>◎</span>
-          </div>
-          <div className="diagram-main">
-            <p>
-              {ar
-                ? "رؤية أوضح. إجراءات مترابطة."
-                : "A clearer view. A connected workflow."}
-            </p>
-            <div className="diagram-path">
-              <div>
-                <small>01</small>
-                <strong>{ar ? "الإدارة" : "Management"}</strong>
-                <i>↗</i>
-              </div>
-              <b>→</b>
-              <div>
-                <small>02</small>
-                <strong>{ar ? "الإصدار" : "Issuance"}</strong>
-                <i>↗</i>
-              </div>
-              <b>→</b>
-              <div>
-                <small>03</small>
-                <strong>{ar ? "العمليات" : "Operations"}</strong>
-                <i>↗</i>
-              </div>
-            </div>
-            <div className="diagram-lines">
-              <div />
-              <div />
-              <div />
-            </div>
-            <div className="diagram-foot">
-              <span className="status-dot" />
-              {ar
-                ? "الأشخاص + الإجراءات + المعلومات"
-                : "PEOPLE + PROCESS + INFORMATION"}
-            </div>
-          </div>
-        </div>
-      </div>
-      <span className="concept-label">
-        {ar
-          ? "تصوّر توضيحي • ليس لقطة من النظام"
-          : "ILLUSTRATIVE CONCEPT • NOT A PRODUCT SCREENSHOT"}
-      </span>
-      <span className="visual-number">N° 01</span>
-    </div>
-  );
+function NabdVisual({ lang }: { lang: Lang }) {
+  return <div className="nabd-cover">
+    <div className="nabd-cover-heading"><span>نبض</span><p>{lang === "ar" ? "منظومتان. دورة عمل واحدة." : "Two systems. One workflow."}</p><small>ISSUANCE / ADMINISTRATION</small></div>
+    <img src="/assets/nabd-admin.webp" width="1280" height="720" loading="lazy" alt={lang === "ar" ? "لوحة إدارة نبض ببيانات تجريبية" : "NABD administration dashboard with demo data"} />
+    <span className="nabd-demo-label">{lang === "ar" ? "واجهة أصلية · بيانات تجريبية" : "ORIGINAL INTERFACE · DEMO DATA"}</span>
+  </div>;
 }
 function Work({ lang, still }: { lang: Lang; still: boolean }) {
   const t = (a: string, e: string) => (lang === "ar" ? a : e);
@@ -630,8 +568,8 @@ function Work({ lang, still }: { lang: Lang; still: boolean }) {
       </div>
       <p className="project-description">
         {t(
-          "نظام لإدارة أعمال شركات التأمين وتنظيم الإجراءات الداخلية، يشمل الإدارة والإصدار والعمليات ذات الصلة.",
-          "A system for managing insurance-company operations and internal workflows, spanning management, issuance and related operations.",
+          "منظومتان متصلتان لأعمال التأمين: إصدار الوثائق لدى الوكلاء، وإدارة الإنتاج والماليات والإجراءات داخل الشركة.",
+          "Two connected insurance systems: policy issuance for agents, and production, finance and internal workflow management for the company.",
         )}
       </p>
     </section>
@@ -750,7 +688,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
             </button>
             <div className="contact-channels">
               {contact.email ? (
-                <a href={`mailto:${contact.email}`}>Email ↗</a>
+                <a href={`mailto:${contact.email}`}><bdi>{contact.email}</bdi> ↗</a>
               ) : (
                 <span>{t("البريد — يُضاف قريبًا", "Email — coming soon")}</span>
               )}
@@ -760,7 +698,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  WhatsApp ↗
+                  {t("واتساب", "WhatsApp")} · <bdi>0927592771</bdi> ↗
                 </a>
               ) : (
                 <span>
@@ -848,139 +786,30 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
 }
 function Project({ lang }: { lang: Lang }) {
   const t = (a: string, e: string) => (lang === "ar" ? a : e);
-  return (
-    <article className="case-page">
-      <section className="case-intro wrap">
-        <a className="text-button" href="/#work">
-          {t("→ العودة إلى الأعمال", "← Back to work")}
-        </a>
-        <div className="case-top">
-          <div>
-            <p className="eyebrow">SELECTED WORK / 01 — BUSINESS SYSTEM</p>
-            <h1>
-              {t("نبض", "NABD")}
-              <span className="accent">.</span>
-            </h1>
-          </div>
-          <p>
-            {t(
-              "إجراءات مترابطة.\nوصورة أوضح للعمل.",
-              "Connected workflows.\nA clearer view of work.",
-            )}
-          </p>
-        </div>
-        <div className="case-facts">
-          <span>
-            {t("المجال", "FIELD")}
-            <strong>
-              {t("إدارة أعمال شركات التأمين", "Insurance business management")}
-            </strong>
-          </span>
-          <span>
-            {t("النطاق المعروف", "KNOWN SCOPE")}
-            <strong>
-              {t(
-                "الإدارة · الإصدار · العمليات",
-                "Management · Issuance · Operations",
-              )}
-            </strong>
-          </span>
-          <span>
-            {t("حالة العرض", "PRESENTATION STATUS")}
-            <strong>
-              {t(
-                "عرض تعريفي — الواجهات الفعلية لاحقًا",
-                "Overview — actual screens to follow",
-              )}
-            </strong>
-          </span>
-        </div>
-      </section>
-      <div className="wrap">
-        <NabdVisual lang={lang} large />
-      </div>
-      <section className="case-story wrap section">
-        <div className="section-label">
-          01 — {t("فكرة المشروع", "THE PROJECT")}
-        </div>
-        <div>
-          <h2>
-            {t("تنظيم ما يحدث", "Organizing what happens")}
-            <br />
-            <span className="accent">
-              {t("خلف كل إجراء.", "behind every process.")}
-            </span>
-          </h2>
-          <p>
-            {t(
-              "نبض نظام لإدارة أعمال شركات التأمين وتنظيم الإجراءات الداخلية. يضم جوانب الإدارة والإصدار والعمليات المرتبطة بها، مع تقديم العمل ضمن تجربة مترابطة.",
-              "NABD is a system for managing insurance-company work and organizing internal procedures. Its scope covers management, issuance and related operations within a connected experience.",
-            )}
-          </p>
-          <p>
-            {t(
-              "هذا العرض يقدّم الفكرة والنطاق المعروفين فقط. ستُضاف تفاصيل سير العمل وقرارات التصميم والتقنيات والنتائج بعد توثيقها، إلى جانب لقطات النظام الفعلية.",
-              "This presentation covers the confirmed idea and scope. Documented workflows, design decisions, technologies and outcomes will be added alongside actual product screenshots.",
-            )}
-          </p>
-        </div>
-      </section>
-      <section className="case-scope wrap">
-        <div className="section-label">02 — {t("نطاق العمل", "THE SCOPE")}</div>
-        <div className="scope-items">
-          {[
-            [
-              t("الإدارة", "Management"),
-              t(
-                "تنظيم أعمال الشركة وإجراءاتها الداخلية.",
-                "Organizing company work and internal procedures.",
-              ),
-            ],
-            [
-              t("الإصدار", "Issuance"),
-              t(
-                "جانب الإصدار ضمن منظومة العمل.",
-                "The issuance side of the business workflow.",
-              ),
-            ],
-            [
-              t("العمليات", "Operations"),
-              t(
-                "العمليات ذات الصلة والإجراءات المرتبطة بها.",
-                "Related operations and their connected procedures.",
-              ),
-            ],
-          ].map(([h, p], i) => (
-            <div key={h}>
-              <span>0{i + 1}</span>
-              <h3>{h}</h3>
-              <p>{p}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="case-note wrap section">
-        <span>↗</span>
-        <div>
-          <h2>{t("مساحة للتفاصيل الحقيقية.", "Room for the real details.")}</h2>
-          <p>
-            {t(
-              "المخطط المعروض تصور توضيحي للفكرة، وليس واجهة فعلية أو بيانات تشغيلية. حالة الإطلاق، والتقنيات المستخدمة، والنتائج لم تُوثّق في هذه النسخة.",
-              "The visual is an illustrative concept, not an actual interface or operational data. Release status, technology choices and outcomes are not yet documented in this edition.",
-            )}
-          </p>
-        </div>
-      </section>
-      <div className="case-bottom wrap">
-        <a className="button primary" href="/#contact">
-          {t("لديك تحدٍّ مشابه؟ لنتحدث", "A similar challenge? Let’s talk")}
-          <Arrow />
-        </a>
-        <a className="text-button" href="/#work">
-          {t("العودة إلى الأعمال", "Back to selected work")}
-          <Arrow />
-        </a>
-      </div>
-    </article>
-  );
+  const strengths = [
+    [t("إصدار منظّم", "Structured issuance"), t("بيانات المؤمن له والمركبة، ترقيم تلقائي للوثيقة، احتساب القسط، ثم المعاينة والطباعة. مسار واضح بدل تشتّت الخطوات.", "Insured and vehicle details, automatic policy numbering, premium calculation, preview and printing—all in a clear sequence.")],
+    [t("مزامنة دون تكرار", "Sync without duplicates"), t("الوثائق المعلّقة تبقى في قائمة الانتظار لإعادة المحاولة. يعتمد النقل على تحديث السجل نفسه، مع تأكيد الاستلام قبل إنهاء دورة المزامنة.", "Pending documents remain queued for retry. Transfers update the same record, with receipt confirmation before the sync cycle is completed.")],
+    [t("الإنتاج متصل بالماليات", "Production meets finance"), t("يرتبط إنتاج كل وكيل بفترته المالية، مع احتساب الوثائق الملغاة وصافي القيمة. وتجمع الإدارة التسويات والدفعات والمتأخرات في سياق العمل نفسه.", "Each agent’s production is linked to its financial period, accounting for cancelled policies and net value. Administration brings settlements, payments and arrears into the same workflow.")],
+    [t("صلاحيات وأثر واضح", "Permissions and traceability"), t("يصل الوكيل إلى وثائقه، وتتحقق المزامنة من ارتباطه وحالته. وتوفّر الإدارة صلاحيات للموظفين وسجلًا للتغييرات لمتابعة ما حدث ومَن نفّذه.", "Agents access their own policies, while synchronization checks their identity and status. Staff permissions and an administrative audit trail make changes easier to trace.")],
+  ];
+  return <article className="case-page">
+    <section className="case-intro wrap">
+      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 01 — INSURANCE SYSTEMS</p><h1>{t("نبض", "NABD")}<span className="accent">.</span></h1></div><p>{t("منظومتان.\nدورة عمل واحدة.", "Two systems.\nOne workflow.")}</p></div>
+      <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("أعمال التأمين", "Insurance operations")}</strong></span><span>{t("المنظومتان", "THE TWO SYSTEMS")}<strong>{t("الإدارة + الإصدار", "Administration + Issuance")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("من الوثيقة إلى المتابعة المالية", "From policy to financial oversight")}</strong></span></div>
+    </section>
+    <section className="case-story wrap section">
+      <div className="section-label">01 — {t("المشكلة والحل", "THE PROBLEM & SOLUTION")}</div>
+      <div><h2>{t("المعلومة تُسجّل.", "Record the information.")}<br/><span className="accent">{t("ثم تصل لمن يحتاجها.", "Connect it to the next step.")}</span></h2>
+      <p>{t("عندما ينفصل إصدار الوثائق عن الإدارة، تصبح متابعة إنتاج الوكلاء ومطابقة السجلات والماليات عملًا متكررًا. نبض يربط هذين الجانبين: منظومة للإصدار وأخرى لإدارة الشركة، تتبادلان البيانات اللازمة لاستكمال دورة العمل.", "When policy issuance is disconnected from administration, tracking agent production and reconciling financial records becomes repetitive work. NABD connects these sides through a dedicated issuance system and a company administration system that exchange the data needed to complete the workflow.")}</p></div>
+    </section>
+    <section className="nabd-systems wrap">
+      <div className="section-label">02 — {t("داخل المنظومتين", "INSIDE THE TWO SYSTEMS")}</div>
+      {[{id:"admin",title:t("الإدارة: الصورة الكاملة", "Administration: the full picture"),text:t("ملفات الوكلاء والعهد، الإنتاج والماليات، طلبات التسوية والاعتماد، المهام والنماذج والتقارير. مكان يجمع متابعة العمل داخل الشركة.", "Agent files and custody records, production and finance, settlement approvals, tasks, templates and reports. One place to follow the company’s internal work.")},{id:"issuer",title:t("الإصدار: من البيانات إلى الوثيقة", "Issuance: from details to policy"),text:t("واجهة للوكلاء لإصدار وثائق الطرف الثالث والتأمين الإجباري. تجمع بيانات العميل والمركبة ومدة التأمين، وتدعم المعاينة والطباعة وسجل الوثائق.", "An agent workspace for third-party and compulsory insurance policies, bringing together customer, vehicle and coverage details, with preview, printing and document records.")}].map((system,i)=><figure className="system-showcase" key={system.id}><figcaption><span className="eyebrow">0{i+1} / {system.id === "admin" ? "ADMINISTRATION" : "ISSUANCE"}</span><h2>{system.title}</h2><p>{system.text}</p></figcaption><a href={`/assets/nabd-${system.id}.webp`} target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}><img src={`/assets/nabd-${system.id}.webp`} width="1280" height="720" loading="lazy" alt={system.title+t(" — بيانات تجريبية", " — demo data")}/><span>{t("تكبير الواجهة ↗", "View full size ↗")}</span></a></figure>)}
+      <p className="screenshot-note">{t("لقطتان من واجهات المشروع الأصلية في بيئة عرض معزولة ببيانات تجريبية، وليستا بيانات تشغيلية أو وثائق عملاء.", "Two original project interfaces rendered in an isolated demo environment. All displayed data is illustrative, not operational records or customer policies.")}</p>
+    </section>
+    <section className="nabd-connection wrap section"><div className="section-label">03 — {t("كيف يرتبطان؟", "HOW THEY CONNECT")}</div><div className="connection-flow"><div><small>01</small><h3>{t("منظومة الإصدار", "Issuance system")}</h3><p>{t("الوثيقة تبدأ عند الوكيل", "The policy starts with the agent")}</p></div><div className="connection-routes"><p>{t("الوثائق والإنتاج: من الإصدار إلى الإدارة", "Issuance → policies & production → administration")}</p><p>{t("حالة الوكيل وصلاحيته: من الإدارة إلى الإصدار", "Administration → agent status & eligibility → issuance")}</p></div><div><small>02</small><h3>{t("منظومة الإدارة", "Administration system")}</h3><p>{t("المتابعة تستمر داخل الشركة", "Oversight continues within the company")}</p></div></div><p className="connection-summary">{t("تستقبل الإدارة الوثائق بعد التحقق من الوكيل. ويعيد الإصدار التحقق من حالته، بحيث لا يكون الربط مجرد نقل ملفات، بل جزءًا من متابعة العمل.", "Administration receives policies after validating the agent. Issuance checks the agent’s status in turn, making the connection part of the working process rather than a simple file transfer.")}</p></section>
+    <section className="case-scope wrap"><div className="section-label">04 — {t("نقاط القوة", "WHAT MAKES IT USEFUL")}</div><div className="scope-items nabd-strengths">{strengths.map(([h,p],i)=><div key={h}><span>0{i+1}</span><h3>{h}</h3><p>{p}</p></div>)}</div></section>
+    <div className="case-bottom wrap"><a className="button primary" href="/#contact">{t("لديك تحدٍّ مشابه؟ لنتحدث", "A similar challenge? Let’s talk")}<Arrow/></a><a className="text-button" href="/#work">{t("العودة إلى الأعمال", "Back to work")}<Arrow/></a></div>
+  </article>;
 }

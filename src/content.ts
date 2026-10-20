@@ -1,5 +1,5 @@
 export type Lang = "ar" | "en";
-export const contact = { email: "", whatsapp: "" }; // Add verified details here; no invented addresses.
+export const contact = { email: "wahj200013@gmail.com", whatsapp: "218927592771" };
 export const services = [
   [
     "أنظمة تخفّف عبء العمل",
