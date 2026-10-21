@@ -1,0 +1,8 @@
+# Render Blueprint — static portfolio site
+services:
+  - type: web
+    name: 7am7am
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeployTrigger: commit
