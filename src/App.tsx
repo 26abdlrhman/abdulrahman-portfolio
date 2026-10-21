@@ -660,7 +660,7 @@ function MobileComingSoon({ lang }: { lang: Lang }) {
       <span className="eyebrow">{t("الفصل القادم / تطبيقات الهاتف", "NEXT CHAPTER / MOBILE APPS")}</span>
       <span className="coming-badge"><span aria-hidden="true" />{t("قريبًا", "Coming soon")}</span>
       <h2 id="mobile-heading">{t("تجارب جديدة،", "New experiences,")}<br/><span className="accent">{t("بحجم راحة يدك.", "in the palm of your hand.")}</span></h2>
-      <p>{t("مساحة لتطبيقات الهاتف القادمة. الفكرة التي أطمح لها لم تأخذ شكلها بعد؛ وعندما تصبح تجربة تستحق المشاركة، ستجدها هنا.", "A space for future mobile apps. The idea I have in mind has yet to take shape. When it becomes an experience worth sharing, you’ll find it here.")}</p>
+      <p>{t("تطبيقات طوّرتها لتجارب يومية أبسط. سأشارك هنا قريبًا تفاصيلها وواجهاتها.", "Apps I’ve built to simplify everyday experiences. Their details and interfaces will be showcased here soon.")}</p>
     </div>
     <div className="mobile-coming-art" aria-hidden="true"><div className="mobile-orbit"/><div className="phone-outline"><div className="phone-speaker"/><Spark/><span>MOBILE / SOON</span><div className="phone-home"/></div><span className="mobile-art-note">{t("الفكرة تبدأ هنا", "AN IDEA STARTS HERE")}</span></div>
   </section>;
