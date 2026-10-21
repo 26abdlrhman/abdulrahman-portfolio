@@ -1,3 +1,4 @@
+import { Arrow, Spark, Globe } from "./Icons";
 import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   motion,
@@ -13,11 +14,6 @@ import {
 } from "motion/react";
 import { contact, services, steps, type Lang } from "./content";
 const Pet = lazy(() => import("./Pet"));
-const Arrow = ({ diagonal = false }: { diagonal?: boolean }) => (
-  <span aria-hidden="true" className="arrow">
-    {diagonal ? "↗" : "↗"}
-  </span>
-);
 export default function App() {
   const [lang, setLang] = useState<Lang>(() => {
     try {
@@ -116,7 +112,7 @@ export default function App() {
             aria-label={t("Switch to English", "التبديل إلى العربية")}
           >
             {t("EN", "عربي")}
-            <span>◎</span>
+            <Globe />
           </button>
           <a className="contact-nav" href={`${casePage ? "/" : ""}#contact`}>
             {t("لنتحدث", "Let’s talk")} <Arrow />
@@ -140,13 +136,13 @@ export default function App() {
             <div className="ticker" aria-hidden="true">
               <div>
                 <span>UNDERSTAND.</span>
-                <b>✳</b>
+                <b><Spark /></b>
                 <span>SIMPLIFY.</span>
-                <b>✳</b>
+                <b><Spark /></b>
                 <span>BUILD.</span>
-                <b>✳</b>
+                <b><Spark /></b>
                 <span>MAKE IT WORK.</span>
-                <b>✳</b>
+                <b><Spark /></b>
               </div>
             </div>
             <About lang={lang} />
@@ -172,7 +168,7 @@ export default function App() {
               ? t("الحركة مخفّضة", "Reduced motion")
               : t("تقليل الحركة", "Reduce motion")}
           </button>
-          <a href="#main">{t("إلى الأعلى ↑", "Back to top ↑")}</a>
+          <a href="#main">{t("إلى الأعلى", "Back to top")} <Arrow direction="up" /></a>
         </div>
         <small>
           © {new Date().getFullYear()} ·{" "}
@@ -235,12 +231,12 @@ function Hero({ lang, still }: { lang: Lang; still: boolean }) {
           </a>
           <a href="#about" className="text-button">
             {t("القصة وراء الكود", "The person behind the code")}
-            <span>↓</span>
+            <Arrow direction="down" />
           </a>
         </div>
         <div className="hero-meta">
           <span>01 / INTRODUCTION</span>
-          <span>{t("مرّر لتكتشف", "SCROLL TO EXPLORE")} ↓</span>
+          <span>{t("مرّر لتكتشف", "SCROLL TO EXPLORE")} <Arrow direction="down" /></span>
         </div>
       </div>
       <div
@@ -293,7 +289,7 @@ function Hero({ lang, still }: { lang: Lang; still: boolean }) {
                 <br />
                 REALITY.
               </span>
-              <b>↗</b>
+              <b><Arrow /></b>
             </div>
             <div className="cube-side" />
           </div>
@@ -328,7 +324,7 @@ function Hero({ lang, still }: { lang: Lang; still: boolean }) {
         </div>
         <span className="scene-coordinate">AF — PERSONAL SPACE / 001</span>
         <div className="spark" aria-hidden="true">
-          ✳
+          <Spark />
         </div>
       </div>
     </section>
@@ -340,7 +336,7 @@ function About({ lang }: { lang: Lang }) {
     <section id="about" className="about wrap section">
       <div className="section-label">
         <span>01 — {t("من أنا", "A LITTLE ABOUT ME")}</span>
-        <span>↙</span>
+        <Arrow direction="down-left" />
       </div>
       <div className="about-body">
         <h2>
@@ -405,7 +401,7 @@ function FlowNode({
     >
       <span>0{i + 1}</span>
       <strong>{labels[i]}</strong>
-      <i>{i === 5 ? "↗" : "+"}</i>
+      <i>{i === 5 ? <Arrow /> : "+"}</i>
     </motion.div>
   );
 }
@@ -457,7 +453,7 @@ function Process({ lang, still }: { lang: Lang; still: boolean }) {
                     <h3>{s[lang === "ar" ? 0 : 1]}</h3>
                     <p>{s[lang === "ar" ? 2 : 3]}</p>
                   </div>
-                  <span className="step-mark">{i === step ? "↗" : "·"}</span>
+                  <span className="step-mark">{i === step ? <Arrow /> : "·"}</span>
                 </div>
               ))}
             </div>
@@ -663,7 +659,7 @@ function Services({ lang }: { lang: Lang }) {
     <section className="services wrap section" id="capabilities">
       <div className="section-label">
         <span>04 — {t("ما أستطيع بناءه", "WHAT I CAN BUILD")}</span>
-        <span>↙</span>
+        <Arrow direction="down-left" />
       </div>
       <div className="services-layout">
         <h2>
@@ -740,7 +736,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
           <span>
             05 — {t("لنصنع شيئًا مفيدًا", "LET’S MAKE SOMETHING USEFUL")}
           </span>
-          <span>↗</span>
+          <Arrow />
         </div>
         <div className="contact-main">
           <div>
@@ -755,7 +751,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
               <br />
               <span>
                 {t("تشتغل.", "it work.")}
-                <i aria-hidden="true">✳</i>
+                <i aria-hidden="true"><Spark /></i>
               </span>
             </h2>
             <button
@@ -769,7 +765,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
             </button>
             <div className="contact-channels">
               {contact.email ? (
-                <a href={`mailto:${contact.email}`}><bdi>{contact.email}</bdi> ↗</a>
+                <a href={`mailto:${contact.email}`}><bdi>{contact.email}</bdi> <Arrow /></a>
               ) : (
                 <span>{t("البريد — يُضاف قريبًا", "Email — coming soon")}</span>
               )}
@@ -779,7 +775,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {t("واتساب", "WhatsApp")} · <bdi>0927592771</bdi> ↗
+                  {t("واتساب", "WhatsApp")} · <bdi>0927592771</bdi> <Arrow />
                 </a>
               ) : (
                 <span>
@@ -856,7 +852,7 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
             <button type="submit" className="button dark">
               {contact.email
                 ? t("إكمال الطلب بالبريد", "Continue in email")
-                : t("تنزيل ملخص الطلب ↓", "Download project brief ↓")}
+                : t("تنزيل ملخص الطلب", "Download project brief")}
             </button>
             <p role="status">{status}</p>
           </form>
@@ -872,7 +868,7 @@ function ProjectDetail({ path, lang }: { path: "nabd" | "luna" | "cafe"; lang: L
 }
 function LunaVisual({ lang }: { lang: Lang }) {
   return <div className="nabd-cover">
-    <div className="nabd-cover-heading"><span>لونا ستور 🌙</span><p>{lang === "ar" ? "متجر. ودفع إلكتروني واضح." : "A store, and clear online payment."}</p><small>SHOP · CART · MYPAY.LY</small></div>
+    <div className="nabd-cover-heading"><span>لونا ستور</span><p>{lang === "ar" ? "متجر. ودفع إلكتروني واضح." : "A store, and clear online payment."}</p><small>SHOP · CART · MYPAY.LY</small></div>
     <img src="/assets/luna-cover.webp" width="1280" height="860" loading="lazy" alt={lang === "ar" ? "الصفحة الرئيسية لونا ستور كما تظهر عند فتح الموقع ببيانات تجريبية" : "Luna Store home page as it appears when opening the site with demo data"} />
     <span className="nabd-demo-label">{lang === "ar" ? "واجهة أصلية · بيانات تجريبية" : "ORIGINAL INTERFACE · DEMO DATA"}</span>
   </div>;
@@ -895,7 +891,7 @@ function LunaCase({ lang }: { lang: Lang }) {
   ];
   return <article className="case-page">
     <section className="case-intro wrap">
-      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <a className="text-button" href="/#work"><Arrow direction={lang === "ar" ? "right" : "left"} />{t("العودة إلى الأعمال", "Back to work")}</a>
       <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 02 — E-COMMERCE & PAYMENTS</p><h1>{t("لونا ستور", "Luna Store")}<span className="accent">.</span></h1></div><p>{t("متجر صغير.\nودفع سهل.", "A small store.\nEasy payment.")}</p></div>
       <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("متجر إلكتروني ومدفوعات", "E-commerce & payments")}</strong></span><span>{t("التقنيات", "STACK")}<strong>{t("Flask · PostgreSQL · MyPay.ly", "Flask · PostgreSQL · MyPay.ly")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("من المنتج إلى الفاتورة دون تعقيد", "From product to invoice without friction")}</strong></span></div>
     </section>
@@ -914,7 +910,7 @@ function LunaCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/luna-shop-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/luna-shop-v.webp" width="1280" height="860" loading="lazy" alt={t("صفحة المتجر: تصنيفات وبحث وشبكة منتجات ببيانات تجريبية", "Shop page: categories, search and a product grid with demo data")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       <figure className="system-showcase">
@@ -925,7 +921,7 @@ function LunaCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/luna-checkout-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/luna-checkout-v.webp" width="1280" height="860" loading="lazy" alt={t("إتمام الشراء: ثلاثة حقول وطرق الدفع الخمس ببيانات تجريبية", "Checkout: three fields and the five payment methods with demo data")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       <details className="case-more"><summary>{t("المزيد من واجهات المشروع", "More project screens")}<span aria-hidden="true">＋</span></summary><div className="case-more-content">
@@ -958,7 +954,7 @@ function LunaCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/luna-admin-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/luna-admin-v.webp" width="1280" height="860" loading="lazy" alt={t("لوحة إدارة المتجر بالإحصاءات والتنبيهات", "Store admin dashboard with stats and alerts")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       </div></details>
@@ -997,7 +993,7 @@ function CafeCase({ lang }: { lang: Lang }) {
   ];
   return <article className="case-page">
     <section className="case-intro wrap">
-      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <a className="text-button" href="/#work"><Arrow direction={lang === "ar" ? "right" : "left"} />{t("العودة إلى الأعمال", "Back to work")}</a>
       <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 03 — POS & OPERATIONS</p><h1>{t("نظام إدارة الكافيه", "Cafe System")}<span className="accent">.</span></h1></div><p>{t("يبيع.\nويحسب. ويُدير.", "It sells.\nCounts. And manages.")}</p></div>
       <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("نقاط بيع وإدارة مقاهي", "POS & cafe operations")}</strong></span><span>{t("التقنيات", "STACK")}<strong>{t("Flask · SQLite · Flutter", "Flask · SQLite · Flutter")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("نظام واحد للجهاز والهاتف", "One system for desktop and phone")}</strong></span></div>
     </section>
@@ -1016,7 +1012,7 @@ function CafeCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/cafe-cover.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/cafe-cover.webp" width="1280" height="860" loading="lazy" alt={t("شاشة البيع: منتجات وتصنيفات وسلة ونوبة نشطة ببيانات تجريبية", "POS screen: products, categories, cart and an active shift with demo data")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       <figure className="system-showcase">
@@ -1027,7 +1023,7 @@ function CafeCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/cafe-debts-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/cafe-debts-v.webp" width="1280" height="860" loading="lazy" alt={t("إدارة المديونية: إحصاءات وقائمة مدينين ببيانات تجريبية", "Debt management: stats and a debtor list with demo data")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       <details className="case-more"><summary>{t("المزيد من واجهات المشروع", "More project screens")}<span aria-hidden="true">＋</span></summary><div className="case-more-content">
@@ -1039,7 +1035,7 @@ function CafeCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/cafe-reports-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/cafe-reports-v.webp" width="1280" height="860" loading="lazy" alt={t("تقرير المبيعات: رسوم بيانية وأصناف أكثر مبيعًا وتنبيهات ذكية", "Sales report: charts, top products and smart insights")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       <figure className="system-showcase">
@@ -1050,7 +1046,7 @@ function CafeCase({ lang }: { lang: Lang }) {
         </figcaption>
         <a href="/assets/cafe-expenses-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
           <img src="/assets/cafe-expenses-v.webp" width="1280" height="860" loading="lazy" alt={t("سجل المصروفات والمسحوبات ببيانات تجريبية", "Expenses and withdrawals log with demo data")} />
-          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+          <span>{t("تكبير الواجهة", "View full size")} <Arrow /></span>
         </a>
       </figure>
       </div></details>
@@ -1085,7 +1081,7 @@ function Project({ lang }: { lang: Lang }) {
   ];
   return <article className="case-page">
     <section className="case-intro wrap">
-      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <a className="text-button" href="/#work"><Arrow direction={lang === "ar" ? "right" : "left"} />{t("العودة إلى الأعمال", "Back to work")}</a>
       <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 01 — INSURANCE SYSTEMS</p><h1>{t("نبض", "NABD")}<span className="accent">.</span></h1></div><p>{t("منظومتان.\nدورة عمل واحدة.", "Two systems.\nOne workflow.")}</p></div>
       <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("أعمال التأمين", "Insurance operations")}</strong></span><span>{t("المنظومتان", "THE TWO SYSTEMS")}<strong>{t("الإدارة + الإصدار", "Administration + Issuance")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("من الوثيقة إلى المتابعة المالية", "From policy to financial oversight")}</strong></span></div>
     </section>
@@ -1096,10 +1092,10 @@ function Project({ lang }: { lang: Lang }) {
     </section>
     <section className="nabd-systems wrap">
       <div className="section-label">02 — {t("داخل المنظومتين", "INSIDE THE TWO SYSTEMS")}</div>
-      {[{id:"admin",title:t("الإدارة: الصورة الكاملة", "Administration: the full picture"),text:t("ملفات الوكلاء والعهد، الإنتاج والماليات، طلبات التسوية والاعتماد، المهام والنماذج والتقارير. مكان يجمع متابعة العمل داخل الشركة.", "Agent files and custody records, production and finance, settlement approvals, tasks, templates and reports. One place to follow the company’s internal work.")},{id:"issuer",title:t("الإصدار: من البيانات إلى الوثيقة", "Issuance: from details to policy"),text:t("واجهة للوكلاء لإصدار وثائق الطرف الثالث والتأمين الإجباري. تجمع بيانات العميل والمركبة ومدة التأمين، وتدعم المعاينة والطباعة وسجل الوثائق.", "An agent workspace for third-party and compulsory insurance policies, bringing together customer, vehicle and coverage details, with preview, printing and document records.")}].map((system,i)=><figure className="system-showcase" key={system.id}><figcaption><span className="eyebrow">0{i+1} / {system.id === "admin" ? "ADMINISTRATION" : "ISSUANCE"}</span><h2>{system.title}</h2><p>{system.text}</p></figcaption><a href={`/assets/nabd-${system.id}.webp`} target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}><img src={`/assets/nabd-${system.id}.webp`} width="1280" height="720" loading="lazy" alt={system.title+t(" — بيانات تجريبية", " — demo data")}/><span>{t("تكبير الواجهة ↗", "View full size ↗")}</span></a></figure>)}
+      {[{id:"admin",title:t("الإدارة: الصورة الكاملة", "Administration: the full picture"),text:t("ملفات الوكلاء والعهد، الإنتاج والماليات، طلبات التسوية والاعتماد، المهام والنماذج والتقارير. مكان يجمع متابعة العمل داخل الشركة.", "Agent files and custody records, production and finance, settlement approvals, tasks, templates and reports. One place to follow the company’s internal work.")},{id:"issuer",title:t("الإصدار: من البيانات إلى الوثيقة", "Issuance: from details to policy"),text:t("واجهة للوكلاء لإصدار وثائق الطرف الثالث والتأمين الإجباري. تجمع بيانات العميل والمركبة ومدة التأمين، وتدعم المعاينة والطباعة وسجل الوثائق.", "An agent workspace for third-party and compulsory insurance policies, bringing together customer, vehicle and coverage details, with preview, printing and document records.")}].map((system,i)=><figure className="system-showcase" key={system.id}><figcaption><span className="eyebrow">0{i+1} / {system.id === "admin" ? "ADMINISTRATION" : "ISSUANCE"}</span><h2>{system.title}</h2><p>{system.text}</p></figcaption><a href={`/assets/nabd-${system.id}.webp`} target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}><img src={`/assets/nabd-${system.id}.webp`} width="1280" height="720" loading="lazy" alt={system.title+t(" — بيانات تجريبية", " — demo data")}/><span>{t("تكبير الواجهة", "View full size")} <Arrow /></span></a></figure>)}
       <p className="screenshot-note">{t("لقطتان من واجهات المشروع الأصلية في بيئة عرض معزولة ببيانات تجريبية، وليستا بيانات تشغيلية أو وثائق عملاء.", "Two original project interfaces rendered in an isolated demo environment. All displayed data is illustrative, not operational records or customer policies.")}</p>
     </section>
-    <section className="nabd-connection wrap section"><div className="section-label">03 — {t("كيف يرتبطان؟", "HOW THEY CONNECT")}</div><div className="connection-flow"><div><small>01</small><h3>{t("منظومة الإصدار", "Issuance system")}</h3><p>{t("الوثيقة تبدأ عند الوكيل", "The policy starts with the agent")}</p></div><div className="connection-routes"><p>{t("الوثائق والإنتاج: من الإصدار إلى الإدارة", "Issuance → policies & production → administration")}</p><p>{t("حالة الوكيل وصلاحيته: من الإدارة إلى الإصدار", "Administration → agent status & eligibility → issuance")}</p></div><div><small>02</small><h3>{t("منظومة الإدارة", "Administration system")}</h3><p>{t("المتابعة تستمر داخل الشركة", "Oversight continues within the company")}</p></div></div><p className="connection-summary">{t("تستقبل الإدارة الوثائق بعد التحقق من الوكيل. ويعيد الإصدار التحقق من حالته، بحيث لا يكون الربط مجرد نقل ملفات، بل جزءًا من متابعة العمل.", "Administration receives policies after validating the agent. Issuance checks the agent’s status in turn, making the connection part of the working process rather than a simple file transfer.")}</p></section>
+    <section className="nabd-connection wrap section"><div className="section-label">03 — {t("كيف يرتبطان؟", "HOW THEY CONNECT")}</div><div className="connection-flow"><div><small>01</small><h3>{t("منظومة الإصدار", "Issuance system")}</h3><p>{t("الوثيقة تبدأ عند الوكيل", "The policy starts with the agent")}</p></div><div className="connection-routes"><p>{t("الوثائق والإنتاج: من الإصدار إلى الإدارة", "Policies and production: from issuance to administration")}</p><p>{t("حالة الوكيل وصلاحيته: من الإدارة إلى الإصدار", "Agent status and eligibility: from administration to issuance")}</p></div><div><small>02</small><h3>{t("منظومة الإدارة", "Administration system")}</h3><p>{t("المتابعة تستمر داخل الشركة", "Oversight continues within the company")}</p></div></div><p className="connection-summary">{t("تستقبل الإدارة الوثائق بعد التحقق من الوكيل. ويعيد الإصدار التحقق من حالته، بحيث لا يكون الربط مجرد نقل ملفات، بل جزءًا من متابعة العمل.", "Administration receives policies after validating the agent. Issuance checks the agent’s status in turn, making the connection part of the working process rather than a simple file transfer.")}</p></section>
     <section className="case-scope wrap"><div className="section-label">04 — {t("نقاط القوة", "WHAT MAKES IT USEFUL")}</div><div className="scope-items nabd-strengths">{strengths.map(([h,p],i)=><div key={h}><span>0{i+1}</span><h3>{h}</h3><p>{p}</p></div>)}</div></section>
     <div className="case-bottom wrap"><a className="button primary" href="/#contact">{t("لديك تحدٍّ مشابه؟ لنتحدث", "A similar challenge? Let’s talk")}<Arrow/></a><a className="text-button" href="/#work">{t("العودة إلى الأعمال", "Back to work")}<Arrow/></a></div>
   </article>;

@@ -2226,3 +2226,10 @@ html[data-motion="reduced"]::view-transition-group(*) {
 .showcase-frame.trio{padding:24px;background:#183d34;border-radius:12px}.showcase-frame.trio span{color:#d0e9dd}.pay-num{color:var(--mint)}
 html[data-motion="reduced"] .nabd-cover img{transition:none;transform:none}
 @media(max-width:760px){.case-top{display:block}.case-top h1{font-size:clamp(38px,11vw,64px);letter-spacing:-.025em}.case-top .eyebrow{font-size:9px}.case-top>p{font-size:18px}.case-facts{gap:18px}.case-more>summary{font-size:15px}.showcase-frame.trio{padding:12px}.case-more-content{padding-top:20px}.system-showcase figcaption>*{min-width:0}.connection-routes p{overflow-wrap:anywhere}.nabd-cover img{border-width:4px}.nabd-cover-heading{margin-bottom:20px}.nabd-cover-heading small{display:none}}
+
+/* Vector icons keep the same monochrome appearance on every platform. */
+.icon-svg{display:inline-block;width:1em;height:1em;flex-shrink:0;vertical-align:-.12em}
+.arrow.icon-svg{width:1em;height:1em;font-family:inherit}
+.language-button>.icon-svg{width:18px;height:18px}
+.step-mark .arrow,.flow-node i .arrow{font-size:inherit}
+.system-showcase>a>span .arrow,.contact-channels .arrow,footer a .arrow{font-size:1em}

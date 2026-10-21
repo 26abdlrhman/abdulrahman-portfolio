@@ -1,3 +1,4 @@
+import { Arrow } from "./Icons";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import {
@@ -47,7 +48,7 @@ export default function Pet({ lang, still }: { lang: Lang; still: boolean }) {
         className="pet-restore text-button"
         onClick={() => setHidden(false)}
       >
-        {lang === "ar" ? "إظهار القط ↗" : "Show cat ↗"}
+        {lang === "ar" ? "إظهار القط" : "Show cat"} <Arrow />
       </button>
     );
   return (
