@@ -148,6 +148,7 @@ export default function App() {
             <About lang={lang} />
             <Process lang={lang} still={still} />
             <Work lang={lang} still={still} />
+            <MobileComingSoon lang={lang} />
             <Services lang={lang} />
             <Contact lang={lang} still={still} />
           </>
@@ -652,6 +653,18 @@ function Work({ lang, still }: { lang: Lang; still: boolean }) {
     </section>
   );
 }
+function MobileComingSoon({ lang }: { lang: Lang }) {
+  const t = (ar: string, en: string) => lang === "ar" ? ar : en;
+  return <section id="mobile-apps" className="mobile-coming wrap" aria-labelledby="mobile-heading">
+    <div className="mobile-coming-copy">
+      <span className="eyebrow">{t("الفصل القادم / تطبيقات الهاتف", "NEXT CHAPTER / MOBILE APPS")}</span>
+      <span className="coming-badge"><span aria-hidden="true" />{t("قريبًا", "Coming soon")}</span>
+      <h2 id="mobile-heading">{t("تجارب جديدة،", "New experiences,")}<br/><span className="accent">{t("بحجم راحة يدك.", "in the palm of your hand.")}</span></h2>
+      <p>{t("مساحة لتطبيقات الهاتف القادمة. الفكرة التي أطمح لها لم تأخذ شكلها بعد؛ وعندما تصبح تجربة تستحق المشاركة، ستجدها هنا.", "A space for future mobile apps. The idea I have in mind has yet to take shape. When it becomes an experience worth sharing, you’ll find it here.")}</p>
+    </div>
+    <div className="mobile-coming-art" aria-hidden="true"><div className="mobile-orbit"/><div className="phone-outline"><div className="phone-speaker"/><Spark/><span>MOBILE / SOON</span><div className="phone-home"/></div><span className="mobile-art-note">{t("الفكرة تبدأ هنا", "AN IDEA STARTS HERE")}</span></div>
+  </section>;
+}
 function Services({ lang }: { lang: Lang }) {
   const [open, setOpen] = useState(0);
   const t = (a: string, e: string) => (lang === "ar" ? a : e);
@@ -765,17 +778,24 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
             </button>
             <div className="contact-channels">
               {contact.email ? (
-                <a href={`mailto:${contact.email}`}><bdi>{contact.email}</bdi> <Arrow /></a>
+                <a className="contact-card" href={`mailto:${contact.email}`}>
+                  <span className="contact-card-label">{t("راسلني بالبريد", "Send me an email")}</span>
+                  <bdi className="contact-card-value">{contact.email}</bdi>
+                  <span className="contact-card-action"><Arrow /></span>
+                </a>
               ) : (
                 <span>{t("البريد — يُضاف قريبًا", "Email — coming soon")}</span>
               )}
               {contact.whatsapp ? (
                 <a
+                  className="contact-card"
                   href={`https://wa.me/${contact.whatsapp}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {t("واتساب", "WhatsApp")} · <bdi>0927592771</bdi> <Arrow />
+                  <span className="contact-card-label">{t("تواصل معي على واتساب", "Let’s talk on WhatsApp")}</span>
+                  <bdi className="contact-card-value">092 759 2771</bdi>
+                  <span className="contact-card-action"><Arrow /></span>
                 </a>
               ) : (
                 <span>
