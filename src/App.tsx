@@ -155,10 +155,22 @@ export default function App() {
         )}
       </main>
       <footer>
-        <a className="footer-name" href="/">
-          Abdulrahman Alferjani
-          <span>{t("نفهم. نبسّط. نبني.", "Understand. Simplify. Build.")}</span>
-        </a>
+        <div className="footer-id">
+          <a className="footer-name" href="/">
+            Abdulrahman Alferjani
+            <span>{t("نفهم. نبسّط. نبني.", "Understand. Simplify. Build.")}</span>
+          </a>
+          <div className="footer-contact">
+            <a href={`mailto:${contact.email}`}><bdi>{contact.email}</bdi></a>
+            <a
+              href={`https://wa.me/${contact.whatsapp}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <bdi>+218 92 759 2771</bdi>
+            </a>
+          </div>
+        </div>
         <div className="footer-controls">
           <button
             onClick={() => setManualStill(!manualStill)}
@@ -776,33 +788,6 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
               {t("لنبدأ من فكرتك", "Start with your idea")}
               <Arrow />
             </button>
-            <div className="contact-channels">
-              {contact.email ? (
-                <a className="contact-card" href={`mailto:${contact.email}`}>
-                  <span className="contact-card-label">{t("راسلني بالبريد", "Send me an email")}</span>
-                  <bdi className="contact-card-value">{contact.email}</bdi>
-                  <span className="contact-card-action"><Arrow /></span>
-                </a>
-              ) : (
-                <span>{t("البريد — يُضاف قريبًا", "Email — coming soon")}</span>
-              )}
-              {contact.whatsapp ? (
-                <a
-                  className="contact-card"
-                  href={`https://wa.me/${contact.whatsapp}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="contact-card-label">{t("تواصل معي على واتساب", "Let’s talk on WhatsApp")}</span>
-                  <bdi className="contact-card-value">092 759 2771</bdi>
-                  <span className="contact-card-action"><Arrow /></span>
-                </a>
-              ) : (
-                <span>
-                  {t("واتساب — يُضاف قريبًا", "WhatsApp — coming soon")}
-                </span>
-              )}
-            </div>
           </div>
           <div className="contact-aside">
             <span className="hand-note">
