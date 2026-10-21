@@ -30,7 +30,9 @@ export default function App() {
   const [manualStill, setManualStill] = useState(false);
   const still = Boolean(prefersReduced || manualStill);
   const [menu, setMenu] = useState(false);
-  const detail = location.pathname.replace(/\/$/, "") === "/nabd";
+  const path = location.pathname.replace(/\/$/, "");
+  const casePage =
+    path === "/nabd" ? "nabd" : path === "/luna" ? "luna" : path === "/cafe-pos" ? "cafe" : null;
   const t = (ar: string, en: string) => (lang === "ar" ? ar : en);
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -39,12 +41,17 @@ export default function App() {
     try {
       localStorage.setItem("portfolio-lang", lang);
     } catch {}
-    document.title = detail
-      ? t("نبض — عبدالرحمن الفرجاني", "NABD — Abdulrahman Alferjani")
-      : t(
-          "عبدالرحمن الفرجاني — من التعقيد إلى الوضوح",
-          "Abdulrahman Alferjani — From complexity to clarity",
-        );
+    document.title =
+      casePage === "nabd"
+        ? t("نبض — عبدالرحمن الفرجاني", "NABD — Abdulrahman Alferjani")
+        : casePage === "luna"
+          ? t("لونا ستور — عبدالرحمن الفرجاني", "Luna Store — Abdulrahman Alferjani")
+          : casePage === "cafe"
+            ? t("نظام إدارة الكافيه — عبدالرحمن الفرجاني", "Cafe Management System — Abdulrahman Alferjani")
+            : t(
+                "عبدالرحمن الفرجاني — من التعقيد إلى الوضوح",
+                "Abdulrahman Alferjani — From complexity to clarity",
+              );
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute(
@@ -54,7 +61,7 @@ export default function App() {
           "Abdulrahman Alferjani — business systems and digital experiences built on understanding.",
         ),
       );
-  }, [lang, still, detail]);
+  }, [lang, still, casePage]);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   return (
@@ -95,7 +102,7 @@ export default function App() {
           ].map(([label, id]) => (
             <a
               key={id}
-              href={`${detail ? "/" : ""}#${id}`}
+              href={`${casePage ? "/" : ""}#${id}`}
               onClick={() => setMenu(false)}
             >
               {label}
@@ -111,7 +118,7 @@ export default function App() {
             {t("EN", "عربي")}
             <span>◎</span>
           </button>
-          <a className="contact-nav" href={`${detail ? "/" : ""}#contact`}>
+          <a className="contact-nav" href={`${casePage ? "/" : ""}#contact`}>
             {t("لنتحدث", "Let’s talk")} <Arrow />
           </a>
           <button
@@ -125,8 +132,8 @@ export default function App() {
         </div>
       </header>
       <main id="main">
-        {detail ? (
-          <Project lang={lang} />
+        {casePage ? (
+          <ProjectDetail path={casePage} lang={lang} />
         ) : (
           <>
             <Hero lang={lang} still={still} />
@@ -533,8 +540,8 @@ function Work({ lang, still }: { lang: Lang; still: boolean }) {
         </h2>
         <p>
           {t(
-            "مشروع واحد الآن. ومساحة لما يأتي بعده.",
-            "One project for now. Room for what comes next.",
+            "ثلاثة مشاريع. ومساحة لما يأتي بعده.",
+            "Three projects for now. Room for what comes next.",
           )}
         </p>
       </div>
@@ -570,6 +577,80 @@ function Work({ lang, still }: { lang: Lang; still: boolean }) {
         {t(
           "منظومتان متصلتان لأعمال التأمين: إصدار الوثائق لدى الوكلاء، وإدارة الإنتاج والماليات والإجراءات داخل الشركة.",
           "Two connected insurance systems: policy issuance for agents, and production, finance and internal workflow management for the company.",
+        )}
+      </p>
+      <div className="project-separator" aria-hidden="true">
+        <span>02</span>
+      </div>
+      <motion.div ref={ref} style={{ rotate: still ? 0 : rotate }}>
+        <a
+          href="/luna/"
+          className="project-link"
+          aria-label={t("استكشف مشروع لونا ستور", "Explore the Luna Store project")}
+        >
+          <LunaVisual lang={lang} />
+          <span className="project-open">
+            <Arrow />
+          </span>
+        </a>
+      </motion.div>
+      <div className="project-caption">
+        <div>
+          <span className="eyebrow">E-COMMERCE + PAYMENTS / 02</span>
+          <h3>
+            {t("لونا ستور", "Luna Store")}
+            <span>
+              {" "}
+              — {t("متجر. ونظام دفع يشبه البساطة.", "A store, and a payment flow that feels simple.")}
+            </span>
+          </h3>
+        </div>
+        <a href="/luna/" className="text-button">
+          {t("قصة المشروع", "Explore the project")}
+          <Arrow />
+        </a>
+      </div>
+      <p className="project-description">
+        {t(
+          "متجر إلكتروني عربي لبيع المنتجات، مع سلة ودفع إلكتروني عبر بوابة MyPay.ly: إنشاء جلسة دفع، تحقق من التوقيع، وويب هوك يؤكد الدفع حتى لو لم يعد العميل.",
+          "An Arabic e-commerce store with a cart and electronic payment through the MyPay.ly gateway: payment sessions, signature verification, and a webhook that confirms payment even if the customer never returns.",
+        )}
+      </p>
+      <div className="project-separator" aria-hidden="true">
+        <span>03</span>
+      </div>
+      <motion.div ref={ref} style={{ rotate: still ? 0 : rotate }}>
+        <a
+          href="/cafe-pos/"
+          className="project-link"
+          aria-label={t("استكشف مشروع نظام إدارة الكافيه", "Explore the cafe management project")}
+        >
+          <CafeVisual lang={lang} />
+          <span className="project-open">
+            <Arrow />
+          </span>
+        </a>
+      </motion.div>
+      <div className="project-caption">
+        <div>
+          <span className="eyebrow">POS + OPERATIONS / 03</span>
+          <h3>
+            {t("نظام إدارة الكافيه", "Cafe Management System")}
+            <span>
+              {" "}
+              — {t("نقطة بيع. ومتابعة كاملة.", "Point of sale, and full oversight.")}
+            </span>
+          </h3>
+        </div>
+        <a href="/cafe-pos/" className="text-button">
+          {t("قصة المشروع", "Explore the project")}
+          <Arrow />
+        </a>
+      </div>
+      <p className="project-description">
+        {t(
+          "نظام نقاط بيع عربي لإدارة المقاهي: المبيعات والنوبات والديون والمصروفات والتقارير، مع تطبيق موبايل وترخيص يمكن تفعيله عن بُعد.",
+          "An Arabic point-of-sale system for cafes: sales, shifts, debts, expenses and reports, with a mobile app and remotely activated licensing.",
         )}
       </p>
     </section>
@@ -783,6 +864,216 @@ function Contact({ lang, still }: { lang: Lang; still: boolean }) {
       </div>
     </section>
   );
+}
+function ProjectDetail({ path, lang }: { path: "nabd" | "luna" | "cafe"; lang: Lang }) {
+  if (path === "luna") return <LunaCase lang={lang} />;
+  if (path === "cafe") return <CafeCase lang={lang} />;
+  return <Project lang={lang} />;
+}
+function LunaVisual({ lang }: { lang: Lang }) {
+  return <div className="nabd-cover">
+    <div className="nabd-cover-heading"><span>لونا ستور 🌙</span><p>{lang === "ar" ? "متجر. ودفع إلكتروني واضح." : "A store, and clear online payment."}</p><small>SHOP · CART · MYPAY.LY</small></div>
+    <img src="/assets/luna-cover.webp" width="1280" height="860" loading="lazy" alt={lang === "ar" ? "الصفحة الرئيسية لونا ستور كما تظهر عند فتح الموقع ببيانات تجريبية" : "Luna Store home page as it appears when opening the site with demo data"} />
+    <span className="nabd-demo-label">{lang === "ar" ? "واجهة أصلية · بيانات تجريبية" : "ORIGINAL INTERFACE · DEMO DATA"}</span>
+  </div>;
+}
+function LunaCase({ lang }: { lang: Lang }) {
+  const t = (a: string, e: string) => (lang === "ar" ? a : e);
+  const paySteps = [
+    [t("السلة أولًا", "Cart first"), t("العميل يتصفح ويضيف للسلة دون تسجيل حساب. السلة محفوظة بمعرّف جلسة في قاعدة البيانات، فتبقى بعد تحديث الصفحة.", "Browsing and adding to the cart needs no account. The cart is stored against a database session id, so it survives a page refresh.")],
+    [t("بيانات الطلب", "Order details"), t("الاسم والهاتف والعنوان فقط. يُنشأ الطلب برقم فريد ‎LUNA-YYYYMMDD-####‎ قبل الدفع، وتحفظ تفاصيل المنتجات كسطور فاتورة.", "Just name, phone and address. The order gets a unique number before payment, and the product lines are stored as invoice rows.")],
+    [t("جلسة الدفع", "Payment session"), t("يُجهّز المتجر جلسة دفع بقيمة الطلب بالدينار الليبي، ثم ينقل العميل إلى صفحة MyPay.ly لإكمال الدفع.", "The store creates a payment session for the order total in Libyan dinars, then takes the customer to MyPay.ly to complete payment.")],
+    [t("الدفع لدى البوابة", "At the gateway"), t("صفحة الدفع مُضافة من البوابة وتجمع: البطاقات البنكية، إدفعلي، يسر باي، صحاري باي، ومصرفي باي. لا تُخزَّن أي بيانات بطاقة في المتجر.", "The hosted page collects bank cards, Edfali, Yasser Pay, Sahari Pay and Masrvi Pay. No card data is ever stored by the store.")],
+    [t("العودة والتحقق", "Return & verify"), t("بعد الدفع يعود العميل إلى صفحة الطلب. لا يُعتمد الحالة من الرابط وحده: يُقارن الرمز العائد برمز الجلسة المحفوظ، فإن لم يطابق يُعلّم الدفع كفاشل.", "The customer returns to the order page. The redirect alone is not trusted: the returned token is compared with the saved session token, and a mismatch marks the payment failed.")],
+    [t("ويب هوك كخط أمان", "Webhook safety net"), t("حتى لو لم يُكمل العميل العودة، تستقبل الخدمة إشعارًا من البوابة بتوقيع HMAC-SHA256 يُتحقق منه قبل تحديث حالة الطلب إلى «مدفوع».", "Even if the customer never returns, the server receives a webhook signed with HMAC-SHA256, verified before the order flips to paid.")],
+  ];
+  const ease = [
+    [t("بلا حساب", "No account needed"), t("لا تسجيل ولا كلمة مرور للعميل: تصفح، سلة، ثلاثة حقول، دفع. كل ما يحتاجه المشتري للوصول إلى الفاتورة هو رقم الطلب.", "No sign-up, no password: browse, cart, three fields, pay. The order number is all a customer needs to reach their invoice.")],
+    [t("واجهة عربية أولاً", "Arabic-first interface"), t("تصميم كامل من اليمين لليسار بخط Cairo، نبرة موجّهة للمرأة، ألوان هادئة، وتنبيهات لحظية بالعربية لكل خطوة (أضيفت إلى السلة، نفدت الكمية…).", "A full RTL layout in the Cairo font, a warm feminine voice, soft colors, and instant Arabic toasts for every step (added to cart, out of stock…).")],
+    [t("حالة واضحة في كل خطوة", "A clear state at every step"), t("فاتورة واحدة بثلاث حالات: مؤكّد، معلّق، أو فشل — بلون ورسالة وأزرار مختلفة. صفحة الفشل تحفظ الطلب وتعرض مؤقتًا لتجربة الدفع مرة أخرى.", "One invoice page with three states — confirmed, pending or failed — each with its own color, message and actions. The failure page keeps the order and offers a retry.")],
+    [t("لوحة تحكم بسيطة", "A simple admin panel"), t("إدارة المنتجات بالصورة أو الإيموجي، إدارة الطلبات بحالات متحركة، وإحصاءات ولوحة تنبيه للمخزون المنخفض في شاشة واحدة.", "Products managed by image or emoji, orders moved through statuses, and a dashboard with stats plus a low-stock alert on one screen.")],
+  ];
+  return <article className="case-page">
+    <section className="case-intro wrap">
+      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 02 — E-COMMERCE & PAYMENTS</p><h1>{t("لونا ستور", "Luna Store")}<span className="accent">.</span></h1></div><p>{t("متجر صغير.\nودفع سهل.", "A small store.\nEasy payment.")}</p></div>
+      <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("متجر إلكتروني ومدفوعات", "E-commerce & payments")}</strong></span><span>{t("التقنيات", "STACK")}<strong>{t("Flask · PostgreSQL · MyPay.ly", "Flask · PostgreSQL · MyPay.ly")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("من المنتج إلى الفاتورة دون تعقيد", "From product to invoice without friction")}</strong></span></div>
+    </section>
+    <section className="case-story wrap section">
+      <div className="section-label">01 — {t("المشكلة والحل", "THE PROBLEM & SOLUTION")}</div>
+      <div><h2>{t("من اختيار المنتج", "From choosing a product")}<br/><span className="accent">{t("إلى طلب واضح.", "to a clear order.")}</span></h2>
+      <p>{t("لونا ستور يجمع تصفح المنتجات والسلة وإتمام الطلب في مسار عربي واضح. ينتقل العميل من اختيار المنتج إلى إدخال بياناته ثم الدفع عبر MyPay.ly، مع عرض حالة الطلب والفاتورة ومتابعته من لوحة الإدارة.", "Luna Store connects browsing, cart and checkout in a clear Arabic shopping journey. Customers choose products, enter their details and continue to MyPay.ly, with visible order and invoice states and an administration dashboard for follow-up.")}</p></div>
+    </section>
+    <section className="nabd-systems wrap">
+      <div className="section-label">02 — {t("لقطات من الواجهة", "SCREENSHOTS")}</div>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">01 / STOREFRONT</span>
+          <h2>{t("المتجر: تصنيفات وبحث وشبكة منتجات", "The store: categories, search, product grid")}</h2>
+          <p>{t("الواجهة تفتح على متجر جاهز للتصفح: شريط تصنيفات، بحث فوري، وشبكة منتجات بصور وشارات مخزون. لا حساب ولا تسجيل لبدء التصفح — السلة تُحفظ بمعرّف جلسة تلقائي.", "The interface opens on a store ready to browse: a category bar, instant search, and a product grid with images and stock badges. No account or sign-up to start — the cart is saved against an automatic session id.")}</p>
+        </figcaption>
+        <a href="/assets/luna-shop-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/luna-shop-v.webp" width="1280" height="860" loading="lazy" alt={t("صفحة المتجر: تصنيفات وبحث وشبكة منتجات ببيانات تجريبية", "Shop page: categories, search and a product grid with demo data")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">02 / CHECKOUT</span>
+          <h2>{t("طرق الدفع الخمس في مكان واحد", "The five payment methods in one place")}</h2>
+          <p>{t("إتمام الشراء ثلاثة حقول فقط: الاسم والهاتف والعنوان. تحتها تُعرض طرق الدفع التي تتيحها بوابة MyPay.ly محليًا — البطاقات البنكية، إدفعلي، يسر باي، صحاري باي، ومصرفي باي — والمبلغ يُرسَل بالعملة LYD إلى جلسة الدفع.", "Checkout is just three fields: name, phone, address. Below them are the payment methods the local MyPay.ly gateway provides — bank cards, Edfali, Yasser Pay, Sahari Pay and Masrvi Pay — with the amount sent in LYD to the payment session.")}</p>
+        </figcaption>
+        <a href="/assets/luna-checkout-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/luna-checkout-v.webp" width="1280" height="860" loading="lazy" alt={t("إتمام الشراء: ثلاثة حقول وطرق الدفع الخمس ببيانات تجريبية", "Checkout: three fields and the five payment methods with demo data")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      <details className="case-more"><summary>{t("المزيد من واجهات المشروع", "More project screens")}<span aria-hidden="true">＋</span></summary><div className="case-more-content">
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">03 / INVOICE</span>
+          <h2>{t("فاتورة واحدة بثلاث حالات", "One invoice, three states")}</h2>
+          <p>{t("بعد الدفع يظهر الطلب بحالة واحدة واضحة: مؤكّد بعلامة نجاح وأزرار الطباعة، معلّق بانتظار تأكيد البوابة، أو فاشل مع بقاء الطلب وزر إعادة المحاولة. اللون والرسالة والأفعال تتغيّر مع الحالة دون صفحة منفصلة.", "After payment, the order shows one clear state: confirmed with a success mark and print actions, pending while the gateway confirms, or failed — keeping the order with a retry button. Color, message and actions change with the state, without a separate page.")}</p>
+        </figcaption>
+        <div className="showcase-frame trio">
+          <a href="/assets/luna-invoice-paid.webp" target="_blank" rel="noreferrer" aria-label={t("فتح فاتورة مؤكّدة بحجمها الكامل", "Open full-size confirmed invoice")}>
+            <img src="/assets/luna-invoice-paid.webp" width="683" height="1000" loading="lazy" alt={t("فاتورة بحالة مؤكدة", "Invoice in confirmed state")} />
+            <span>{t("مؤكّدة", "Confirmed")}</span>
+          </a>
+          <a href="/assets/luna-invoice-pending.webp" target="_blank" rel="noreferrer" aria-label={t("فتح فاتورة معلّقة بحجمها الكامل", "Open full-size pending invoice")}>
+            <img src="/assets/luna-invoice-pending.webp" width="689" height="1000" loading="lazy" alt={t("فاتورة بحالة معلقة", "Invoice in pending state")} />
+            <span>{t("معلّقة", "Pending")}</span>
+          </a>
+          <a href="/assets/luna-payment-failed.webp" target="_blank" rel="noreferrer" aria-label={t("فتح صفحة فشل الدفع بحجمها الكامل", "Open full-size payment failure page")}>
+            <img src="/assets/luna-payment-failed.webp" width="1000" height="711" loading="lazy" alt={t("صفحة فشل الدفع مع إعادة المحاولة", "Payment failure page with retry")} />
+            <span>{t("فاشلة", "Failed")}</span>
+          </a>
+        </div>
+      </figure>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">04 / ADMIN</span>
+          <h2>{t("لوحة الإدارة: الطلبات والمخزون في شاشة", "Admin: orders and stock on one screen")}</h2>
+          <p>{t("إدارة المنتجات بالصورة أو الإيموجي، وحركة الطلبات بين الحالات، وإحصاءات مصغّرة مع تنبيه للمخزون المنخفض — كلها في لوحة واحدة تُدار من المتصفح.", "Products managed by image or emoji, orders moving between statuses, and compact stats with a low-stock alert — all in one browser dashboard.")}</p>
+        </figcaption>
+        <a href="/assets/luna-admin-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/luna-admin-v.webp" width="1280" height="860" loading="lazy" alt={t("لوحة إدارة المتجر بالإحصاءات والتنبيهات", "Store admin dashboard with stats and alerts")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      </div></details>
+      <p className="screenshot-note">{t("لقطات من الواجهة الأصلية في بيئة عرض معزولة ببيانات تجريبية: منتجات وعملاء وأرقام طلبات افتراضية، لا سجلات تشغيلية حقيقية.", "Screenshots of the original interface in an isolated demo environment with synthetic data: demo products, customers and order numbers — not operational records.")}</p>
+    </section>
+    <section className="nabd-connection wrap section">
+      <div className="section-label">03 — {t("رحلة الدفع", "THE PAYMENT JOURNEY")}</div>
+      <div className="pay-steps">
+        {paySteps.map(([h, p], i) => <div className="pay-step" key={h}><span className="pay-num">{String(i + 1).padStart(2, "0")}</span><div><h3>{h}</h3><p>{p}</p></div></div>)}
+      </div>
+      <p className="screenshot-note">{t("المتجر لا يخزّن بيانات بطاقات إطلاقًا؛ صفحة الدفع مُضافة من بوابة MyPay.ly، ودور الخادم محصور في إنشاء الجلسة والتحقق من النتيجة.", "The store never stores card data; the payment page is hosted by MyPay.ly, and the server's role is limited to creating the session and verifying the result.")}</p>
+    </section>
+    <section className="case-scope wrap">
+      <div className="section-label">04 — {t("نقاط القوة", "WHAT MAKES IT USEFUL")}</div>
+      <div className="scope-items nabd-strengths">{ease.map(([h, p], i) => <div key={h}><span>0{i + 1}</span><h3>{h}</h3><p>{p}</p></div>)}</div>
+    </section>
+    <div className="case-bottom wrap"><a className="button primary" href="/#contact">{t("عندك متجر يحتاج هكذا تجربة؟", "A store that needs this?")}<Arrow /></a><a className="text-button" href="/#work">{t("العودة إلى الأعمال", "Back to work")}<Arrow /></a></div>
+  </article>;
+}
+function CafeVisual({ lang }: { lang: Lang }) {
+  return <div className="nabd-cover">
+    <div className="nabd-cover-heading"><span>POS</span><p>{lang === "ar" ? "نظام إدارة الكافيه" : "Cafe Management System"}</p><small>SALES · SHIFTS · DEBTS</small></div>
+    <img src="/assets/cafe-cover.webp" width="1280" height="860" loading="lazy" alt={lang === "ar" ? "شاشة نقطة بيع نظام إدارة الكافيه ببيانات تجريبية" : "Cafe management point-of-sale screen with demo data"} />
+    <span className="nabd-demo-label">{lang === "ar" ? "واجهة أصلية · بيانات تجريبية" : "ORIGINAL INTERFACE · DEMO DATA"}</span>
+  </div>;
+}
+function CafeCase({ lang }: { lang: Lang }) {
+  const t = (a: string, e: string) => (lang === "ar" ? a : e);
+  const features = [
+    [t("نقطة بيع سريعة", "Fast point of sale"), t("شاشة واحدة تجمع المنتجات والبحث والباركود والسلة. أربع طرق للإتمام: نقدي، إضافة إلى المديونية، موبا كاش، أو تسجيل كمعلّق.", "One screen for products, search, barcode and cart. Four ways to finish a sale: cash, add to debt, Mobicash, or record as unpaid.")],
+    [t("نوبات وورديات", "Shift management"), t("بدء نوبة وإغلاقها بضغطة. عند الإغلاق تُحسب مبيعات ومصروفات وأوامر النوبة تلقائيًا، ويعرض سجل النوبات صافي كل وردية.", "Start and close a shift with one button. On closing, the shift's sales, expenses and orders are computed, and the shifts log shows each shift's net.")],
+    [t("مديونية لكل عميل", "Debts per customer"), t("رصيد مفتوح لكل اسم: إضافة دين، سداد جزئي أو كامل أو دفعات محددة، مع تفاصيل وطباعة تقرير العميل.", "An open balance per customer: add a debt, pay part or all or selected rows, with details and a printable customer report.")],
+    [t("مصروفات وتقارير", "Expenses & reports"), t("تسجيل المصروفات والمسحوبات بتصنيفات، وتقارير بأفضل المنتجات وساعة الذروة ورسوم بيانية، وكلها قابلة للطباعة.", "Log expenses and withdrawals by category, with top-product and peak-hour reports and charts — all printable.")],
+    [t("موبايل بنفس البيانات", "Mobile on the same data"), t("تطبيق Flutter يتصل بخادم API محلي على نفس قاعدة البيانات، فيبيع الموظف من هاتفه ويرى التقارير نفسها لحظيًا.", "A Flutter app talks to a local API on the same database, so staff can sell from a phone and see the same live reports.")],
+    [t("ترخيص يُدار عن بُعد", "Remotely managed licensing"), t("فترة تجريبية سبعة أيام، ووكيل صغير في جهاز العميل يربطه بلوحة تحكم المطوّر: تفعيل أو تعطيل الترخيص وتحديث البرنامج عن بُعد.", "A seven-day trial, plus a small agent on the customer's machine that connects to the developer's console: activate or disable the license, and push updates remotely.")],
+  ];
+  return <article className="case-page">
+    <section className="case-intro wrap">
+      <a className="text-button" href="/#work">{t("→ العودة إلى الأعمال", "← Back to work")}</a>
+      <div className="case-top"><div><p className="eyebrow">SELECTED WORK / 03 — POS & OPERATIONS</p><h1>{t("نظام إدارة الكافيه", "Cafe System")}<span className="accent">.</span></h1></div><p>{t("يبيع.\nويحسب. ويُدير.", "It sells.\nCounts. And manages.")}</p></div>
+      <div className="case-facts"><span>{t("المجال", "FIELD")}<strong>{t("نقاط بيع وإدارة مقاهي", "POS & cafe operations")}</strong></span><span>{t("التقنيات", "STACK")}<strong>{t("Flask · SQLite · Flutter", "Flask · SQLite · Flutter")}</strong></span><span>{t("الفكرة", "THE IDEA")}<strong>{t("نظام واحد للجهاز والهاتف", "One system for desktop and phone")}</strong></span></div>
+    </section>
+    <section className="case-story wrap section">
+      <div className="section-label">01 — {t("المشكلة والحل", "THE PROBLEM & SOLUTION")}</div>
+      <div><h2>{t("كل تفاصيل اليوم،", "The whole working day,")}<br/><span className="accent">{t("في مسار واحد.", "in one workflow.")}</span></h2>
+      <p>{t("اليوم في المقاهي يتشتت: البيع هنا، الديون في دفتر، المصروفات في مكان آخر، وحساب الوردية في آخر النهار. نظام إدارة الكافيه يجمع هذه في شاشة واحدة تعمل على الجهاز نفسه دون إنترنت، مع تطبيق موبايل يقرأ ويكتب من قاعدة البيانات نفسها.", "A cafe day scatters: sales here, debts in a notebook, expenses elsewhere, and shift math at closing time. The Cafe Management System brings these into one screen that runs on the machine itself without internet, with a mobile app reading and writing the same database.")}</p></div>
+    </section>
+    <section className="nabd-systems wrap">
+      <div className="section-label">02 — {t("لقطات من النظام", "SCREENSHOTS")}</div>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">01 / POINT OF SALE</span>
+          <h2>{t("شاشة البيع السريع", "The quick-sale screen")}</h2>
+          <p>{t("شاشة واحدة تجمع شبكة المنتجات وشريط التصنيفات والبحث وحقل الباركود وعربة التسوق. أربع طرق لإتمام البيع — نقدي، إضافة إلى المديونية، موبا كاش، أو تسجيل كمعلّق — وشريط النوبة النشطة أعلى الشاشة يذكّر الموظف بأن كل بيع يُحتسب في ورديته.", "One screen gathers the product grid, the category bar, search, the barcode field and the cart. Four ways to finish a sale — cash, add to debt, Mobicash, or record as unpaid — and the active-shift banner on top reminds staff that every sale counts toward their shift.")}</p>
+        </figcaption>
+        <a href="/assets/cafe-cover.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/cafe-cover.webp" width="1280" height="860" loading="lazy" alt={t("شاشة البيع: منتجات وتصنيفات وسلة ونوبة نشطة ببيانات تجريبية", "POS screen: products, categories, cart and an active shift with demo data")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">02 / DEBTS</span>
+          <h2>{t("مديونية مفتوحة لكل عميل", "An open balance per customer")}</h2>
+          <p>{t("بطاقة إحصاء تجمع إجمالي الديون وعدد المدينين، وقائمة قابلة للبحث والفلترة. لكل اسم رصيد مفتوح يقبل الإضافة والسداد الجزئي أو الكامل أو الدفعات المحددة، مع تفاصيل وطباعة تقرير العميل.", "A stats card totals debts and debtor count, with a searchable, filterable list. Each name carries an open balance that accepts additions and partial or full or selected-row payments, with details and a printable customer report.")}</p>
+        </figcaption>
+        <a href="/assets/cafe-debts-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/cafe-debts-v.webp" width="1280" height="860" loading="lazy" alt={t("إدارة المديونية: إحصاءات وقائمة مدينين ببيانات تجريبية", "Debt management: stats and a debtor list with demo data")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      <details className="case-more"><summary>{t("المزيد من واجهات المشروع", "More project screens")}<span aria-hidden="true">＋</span></summary><div className="case-more-content">
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">03 / REPORTS</span>
+          <h2>{t("تقارير تُقرأ في ثوانٍ", "Reports readable in seconds")}</h2>
+          <p>{t("أفضل الأصناف، ساعة الذروة، ورسوم بيانية للمبيعات والمصروفات — تُقرأ في ثوانٍ وتُطبع عند الحاجة، دون انتظار نهاية الشهر أو فتح برنامج آخر.", "Top products, peak hour, and sales and expense charts — readable in seconds and printable when needed, without waiting for month-end or opening another program.")}</p>
+        </figcaption>
+        <a href="/assets/cafe-reports-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/cafe-reports-v.webp" width="1280" height="860" loading="lazy" alt={t("تقرير المبيعات: رسوم بيانية وأصناف أكثر مبيعًا وتنبيهات ذكية", "Sales report: charts, top products and smart insights")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      <figure className="system-showcase">
+        <figcaption>
+          <span className="eyebrow">04 / EXPENSES</span>
+          <h2>{t("مصروفات ومسحوبات بسجل واضح", "Expenses and withdrawals, clearly logged")}</h2>
+          <p>{t("تسجيل المصروفات والمسحوبات بتصنيفات، وجدول قابل للفلترة والطباعة يمنع تشتّت الدفتر الورقي ويُظهر حركة الوردية في مكانها.", "Expenses and withdrawals logged by category in a filterable, printable table — replacing a scattered paper notebook and showing the shift's movement in place.")}</p>
+        </figcaption>
+        <a href="/assets/cafe-expenses-v.webp" target="_blank" rel="noreferrer" aria-label={t("فتح لقطة الواجهة بحجمها الكامل", "Open full-size interface screenshot")}>
+          <img src="/assets/cafe-expenses-v.webp" width="1280" height="860" loading="lazy" alt={t("سجل المصروفات والمسحوبات ببيانات تجريبية", "Expenses and withdrawals log with demo data")} />
+          <span>{t("تكبير الواجهة ↗", "View full size ↗")}</span>
+        </a>
+      </figure>
+      </div></details>
+      <p className="screenshot-note">{t("لقطات من الواجهة الأصلية في بيئة عرض معزولة ببيانات تجريبية (منتجات ومبالغ وأسماء افتراضية)، لا بيانات تشغيلية أو عملاء حقيقيون.", "Screenshots of the original interface in an isolated demo environment with synthetic data (demo products, amounts and names) — no operational records or real customers.")}</p>
+    </section>
+    <section className="nabd-connection wrap section">
+      <div className="section-label">03 — {t("كيف يعمل؟", "HOW IT WORKS")}</div>
+      <div className="connection-flow cafe-flow">
+        <div><small>01</small><h3>{t("برنامج الجهاز", "Desktop app")}</h3><p>{t("Flask + SQLite محليًا، يعمل دون إنترنت", "Flask + SQLite locally, works offline")}</p></div>
+        <div className="connection-routes">
+          <p>{t("قاعدة بيانات واحدة: قراءة وكتابة من الجهازين", "One database: read and write from both devices")}</p>
+          <p>{t("نسخ احتياطي مجدول يوميًا للقاعدة", "A scheduled daily backup of the database")}</p>
+        </div>
+        <div><small>02</small><h3>{t("تطبيق الموبايل", "Mobile app")}</h3><p>{t("Flutter يتصل بخادم API محلي", "Flutter over a local API server")}</p></div>
+      </div>
+      <p className="screenshot-note">{t("قاعدة البيانات بـSQLite بوضع WAL مع أقفال للعمليات الحساسة (الديون والمصروفات والإحصاءات) لتتحمّل دخول الموظفين المتزامن دون تكرار أو فقد.", "SQLite runs in WAL mode with locks around sensitive operations (debts, expenses, stats) so concurrent staff entries are handled without duplicates or loss.")}</p>
+    </section>
+    <section className="case-scope wrap">
+      <div className="section-label">04 — {t("نقاط القوة", "WHAT MAKES IT USEFUL")}</div>
+      <div className="scope-items nabd-strengths">{features.map(([h, p], i) => <div key={h}><span>0{i + 1}</span><h3>{h}</h3><p>{p}</p></div>)}</div>
+    </section>
+    <div className="case-bottom wrap"><a className="button primary" href="/#contact">{t("نظام يخدم عملك؟ لنتحدث", "A system for your business?")}<Arrow /></a><a className="text-button" href="/#work">{t("العودة إلى الأعمال", "Back to work")}<Arrow /></a></div>
+  </article>;
 }
 function Project({ lang }: { lang: Lang }) {
   const t = (a: string, e: string) => (lang === "ar" ? a : e);
